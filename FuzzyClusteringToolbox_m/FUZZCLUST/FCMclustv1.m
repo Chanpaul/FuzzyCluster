@@ -65,18 +65,18 @@ J=[];
 % J=[];
 %*****************end*****************************
 %*********************test****************************
-figure(c);
-cmap=colormap;
-plot(dataset(:,1),dataset(:,2),'.','MarkerSize',3,'MarkerFaceColor',[0 0 0]);
-hold on
-markerSz=8;
-marker=['o','*','s','<','d'];
-for k=1:c,
-    ic=int8((k*64.)/(c*1.));
-    color=cmap(ic,:);
-    plot(v(k,1),v(k,2),marker(k),'MarkerSize',markerSz,'MarkerFaceColor',color);
-    hold on
-end;
+% figure(c);
+% cmap=colormap;
+% plot(dataset(:,1),dataset(:,2),'.','MarkerSize',3,'MarkerFaceColor',[0 0 0]);
+% hold on
+% markerSz=8;
+% marker=['o','*','s','<','d'];
+% for k=1:c,
+%     ic=int8((k*64.)/(c*1.));
+%     color=cmap(ic,:);
+%     plot(v(k,1),v(k,2),marker(k),'MarkerSize',markerSz,'MarkerFaceColor',color);
+%     hold on
+% end;
 %********************end test******************************
 
 % Iterate
@@ -99,15 +99,15 @@ while abs(J0-initialJ)>e
 %   J(iter) = sum(sum(f0.*d));
   J(iter)=sum(diag(transpose(f0.^m)*d0));
   J0=J(iter);
-  %***********************test for illustrating the variation of cluster center*********************
-  markerSz=markerSz+2;
-  for k=1:c,
-      ic=int8((k*64.)/(c*1.));
-      color=cmap(ic,:);
-      plot(v(k,1),v(k,2),marker(k),'MarkerSize',8,'MarkerFaceColor',color);
-      hold on
-  end;
-  %*********************end of test****************************
+%   %***********************test for illustrating the variation of cluster center*********************
+%   markerSz=markerSz+2;
+%   for k=1:c,
+%       ic=int8((k*64.)/(c*1.));
+%       color=cmap(ic,:);
+%       plot(v(k,1),v(k,2),marker(k),'MarkerSize',8,'MarkerFaceColor',color);
+%       hold on
+%   end;
+%   %*********************end of test****************************
   
 end
 
