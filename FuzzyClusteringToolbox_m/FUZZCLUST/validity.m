@@ -18,8 +18,7 @@ if param.val==1
      
      %results   
      result.validity.PC = PC;
-     result.validity.CE = CE;   
-        
+     result.validity.CE = CE;        
         
         
  elseif param.val==2

@@ -15,7 +15,8 @@ nneigh=iniParam.nneigh;
 rho_sorted=iniParam.rho_sorted;
 ordrho=iniParam.ordrho;
 dclMx=iniParam.dclMx;   %dclMx(i,j)=1 means that the ith data belongs to the cluster centered at the jth data.
-clustRt=iniParam.clustRt;
+clustRt=iniParam.pclustRt;  %  iniParam.clustRt
+
 delta=iniParam.delta;
 icl=zeros(clusterNum,n);
 rho=iniParam.rho;
@@ -80,17 +81,17 @@ while abs(J0-initialJ)>e
   % Calculate centers
   
   fm = f0.^m;
-%   sumf = sum(fm);
-%   v = (fm'*X)./(sumf'*ones(1,n));
+  sumf = sum(fm);
+  v = (fm'*X)./(sumf'*ones(1,n));
 %   v = (fm'*X)./(sumf'*ones(1,n));
 
   for j = 1 : clusterNum,
-      sumf=transpose(dclMx(:,clustRt(j)))*fm(:,j);
-%       clustElem=find(cl==j);      
-%     
-%       sumf=sum(fm(clustElem,j));
-%       v(j,:)= fm(clustElem,j)'*X(clustElem,:)./sumf;
-      v(j,:)= full(transpose(dclMx(:,clustRt(j)).*fm(:,j))*X./sumf);
+%       sumf=transpose(dclMx(:,clustRt(j)))*fm(:,j);
+% %       clustElem=find(cl==j);      
+% %     
+% %       sumf=sum(fm(clustElem,j));
+% %       v(j,:)= fm(clustElem,j)'*X(clustElem,:)./sumf;
+%       v(j,:)= full(transpose(dclMx(:,clustRt(j)).*fm(:,j))*X./sumf);
       xv = X - X1*v(j,:);
       d(:,j) = sum((xv*eye(n).*xv),2);      
   end;
