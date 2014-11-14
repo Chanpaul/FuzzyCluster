@@ -39,10 +39,12 @@ end;
 for i=1:clusterNum, 
     icl(i,:)=full((transpose(dclMx(:,clustRt(i)))*dataset))./sum(dclMx(:,clustRt(i)));
     for j=1:N,
-        d(j,i)=sqrt(sum((dataset(j,:)-icl(i)).^2,2));        
+        d(j,i)=sum((dataset(j,:)-icl(i)).^2,2);        
     end;    
 end;
-
+%Introducing null cluster
+%d(:,end+1)=transpose(max(dist).^2);
+%
 % rhoCoef=clustDomMx.*(normRho'*ones(1,clusterNum));
 %********************Computing the initial membership********************
 
@@ -52,6 +54,7 @@ f0 = (d ./ (sum(d,2)*ones(1,clusterNum)));
 
 %J0=sum(diag(transpose(rhoCoef.*f0.^m)*d0));
 J0=sum(diag(transpose(f0.^m)*d0));
+%f0=f0(:,1:clusterNum); %exclude the null cluster.
 %********************End of computing initial membership******************
 
 % f = zeros(N,clusterNum);                % partition matrix
@@ -95,7 +98,7 @@ while abs(J0-initialJ)>e
       xv = X - X1*v(j,:);
       d(:,j) = sum((xv*eye(n).*xv),2);      
   end;
-  distout=sqrt(d);
+  distout=sqrt(d);  
   d0=d;
   d = (d+1e-10).^(-1/(m-1));
   f0 = (d ./ (sum(d,2)*ones(1,clusterNum)));
@@ -104,7 +107,7 @@ while abs(J0-initialJ)>e
   
 %   J(iter)=sum(diag(transpose(rhoCoef.*f0.^m)*d0));
   J0=J(iter);
-  
+  %f0=f0(:,1:clusterNum); %exclude the null cluster.
 %   for k=1:clusterNum,
 %       ic=int8((k*64.)/(clusterNum*1.));
 %       color=cmap(ic,:);

@@ -1,4 +1,4 @@
-function [accuracy, true_labels, CM] = calculateAccuracy(yte, y)
+function [accuracy, true_labels, CM, corLabel] = calculateAccuracy(yte, y)
 %# Function for calculating clustering accuray and matching found 
 %# labels with true labels. Assumes yte and y both are Nx1 vectors with
 %# clustering labels. Does not support fuzzy clustering.
@@ -23,12 +23,13 @@ function [accuracy, true_labels, CM] = calculateAccuracy(yte, y)
 %#                   correct clusterings done.
 
 N = length(y);
-cluster_names = unique([yte y]);
+cluster_names = unique([yte' y']);
 %cluster_names = unique(yte);
 accuracy = 0;
 maxInd = 1;
 
-perm = perms(unique(y));
+perm = perms(unique([yte' y']));
+%perm = perms(unique(y));
 [pN pM] = size(perm);
 
 true_labels = y;
@@ -47,6 +48,7 @@ for i=1:pN
     end
 
 end
+corLabel=perm(maxInd,:);  % the corresponding relations between true labels and the test results.
 
 CM = zeros(pM,pM);
 for rc = 1 : pM
